@@ -10,20 +10,17 @@ router.get('/users', async (req, res) => {
     const users = await user.find()
     console.log(Date.now())
     res.send(users)
-    // res.send(users.)
+   
 })
 router.post('/login', async (req, res) => {
     
     const { name, pass } = req.body
     const user = await users.findOne({ name, pass })
-    // user.notifs.notif.push({author:"admin", text:"Оплатил чтото"})
-    // user.save()
+
     if (!user) {
         res.send(false)
     }
     else {
-
-
         res.send(user)
     }
 })
@@ -33,7 +30,6 @@ router.post('/userById', async (req, res) => {
     const user = await users.findById(req.body._id)
 
     res.send(user)
-
 })
 
 router.post('/registr', async (req, res) => {
@@ -68,14 +64,18 @@ router.post('/productById', async(req,res)=>{
 })
 router.post('/addToCard', async(req,res)=>{
     let userf = await user.findOne({_id:req.body._id})
+
     let hasThis = false;
     let ind = 0;
+
     for(let i =0; i < userf.korz.items.length;i++){
+
         if(userf.korz.items[i]._id==req.body.prod._id){
             hasThis = true
             ind = i
         }
     }
+    
     if(hasThis){
         userf.korz.items[ind].count++
     }else{
