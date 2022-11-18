@@ -1,0 +1,5 @@
+**/node_modules
+/server/middleware
+/client/build
+/client/static
+/client/test
