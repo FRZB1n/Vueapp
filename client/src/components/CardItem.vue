@@ -34,9 +34,9 @@ export default {
         plus(index){
             this.total += this.korz[index].cost
             this.korz[index].count++
-            this.$emit('change', {
-                totalUP:this.total
-            })
+            
+            this.$store.dispatch('AUPDCARDCOST', this.total)
+
              
         },
 
@@ -44,9 +44,8 @@ export default {
             if(this.korz[index].count>0){
                 this.korz[index].count--
                 this.total -= this.korz[index].cost
-                this.$emit('change', {
-                    totalUP:this.total
-                })
+                this.$store.dispatch('AUPDCARDCOST', this.total)
+
                 if( this.korz[index].count == 0){
                     this.korz.splice(index,1)
                 }
@@ -56,11 +55,11 @@ export default {
         },
 
     },
-    data(){
-        return{
-            total:0
-        }
-    },
+    // data(){
+    //     return{
+    //         total:0
+    //     }
+    // },
     async beforeDestroy() {
        await serv.EditKorz(localStorage.id, this.korz)
     }

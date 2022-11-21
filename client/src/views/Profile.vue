@@ -46,6 +46,7 @@ export default {
     components:{
         NavBar
     },
+
     methods:{
         card(){
             this.$router.push('card')

@@ -10,10 +10,10 @@
               </tr>
             </thead>
             
-              <CardItem :korz="Korz" :total="total"   @change='onChange'/>
+              <CardItem :korz="Korz" :total="TotalCardcost"   @change='onChange'/>
             
           </table>
-          <p style="float:left; margin-left:10px">Total Cost: {{total}}</p>
+          <p style="float:left; margin-left:10px">Total Cost: {{TotalCardcost}}</p>
           <div class="d-flex justify-content-start" style="margin-top:60px; margin-left:10px">
             <button v-if="total>0" type="button" class="btn btn-outline-success" @click="purchase">Оплатить</button>
             <button v-else-if="total<=0" type="button" class="btn btn-outline-success" disabled>Оплатить</button>
@@ -26,10 +26,13 @@
 <script>
 import CardItem from '../components/Carditem.vue'
 import serv from '../services/serv'
+
+import {mapGetters} from "vuex"
 export default {
     components:{
       CardItem
     },
+    computed:mapGetters(["TotalCardcost"]),
     methods:{
       onChange (data) {
         this.total = data.totalUP
@@ -53,6 +56,7 @@ export default {
          
                 this.total+= (korz[i].cost * korz[i].count)
             }
+            this.$store.dispatch('AUPDCARDCOST', this.total)
             
 
       }
