@@ -10,7 +10,7 @@
               </tr>
             </thead>
             
-              <CardItem :korz="Korz" :total="TotalCardcost"   @change='onChange'/>
+              <CardItem :korz="Korz" :total="TotalCardcost"   />
             
           </table>
           <p style="float:left; margin-left:10px">Total Cost: {{TotalCardcost}}</p>
@@ -27,16 +27,20 @@
 import CardItem from '../components/Carditem.vue'
 import serv from '../services/serv'
 
-import {mapGetters} from "vuex"
+import {mapGetters, mapActions} from "vuex"
 export default {
     components:{
       CardItem
     },
-    computed:mapGetters(["TotalCardcost"]),
+    computed:{
+      ...mapGetters([
+        "TotalCardcost"
+      ]),
+    },
     methods:{
-      onChange (data) {
-        this.total = data.totalUP
-      },
+      ...mapActions([
+        'AUPDCARDCOST'
+      ]),
       purchase(){
         this.$router.push('opl')
       }
@@ -50,13 +54,13 @@ export default {
           const user = resp.data
           const korz = user.korz.items
           this.Korz = korz
-          
+            
          
             for(let i = 0; i <korz.length; i++){
          
                 this.total+= (korz[i].cost * korz[i].count)
             }
-            this.$store.dispatch('AUPDCARDCOST', this.total)
+            this.AUPDCARDCOST(this.total)
             
 
       }

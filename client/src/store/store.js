@@ -4,7 +4,7 @@ import vuex from 'vuex'
 vue.use(vuex)
 const store = new vuex.Store({
     actions:{
-        AUPDCARDCOST({commit}, price){
+         AUPDCARDCOST({commit}, price){
             commit('UpdateCardCost', price)
         }
     },
@@ -19,7 +19,7 @@ const store = new vuex.Store({
     mutations:{
         UpdateCardCost(state, price){
             
-                state.TotalCardCost = price
+            state.TotalCardCost = price
         }
     }
 })

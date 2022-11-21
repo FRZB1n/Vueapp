@@ -16,7 +16,7 @@
 <script>
 
 import serv from '../services/serv'
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
     props:{
         korz:{
@@ -29,13 +29,16 @@ export default {
         }
     },
     
+    
 
     methods:{
+        ...mapActions([
+            'AUPDCARDCOST'
+        ]),
         plus(index){
             this.total += this.korz[index].cost
             this.korz[index].count++
-            
-            this.$store.dispatch('AUPDCARDCOST', this.total)
+            this.AUPDCARDCOST(this.total)
 
              
         },
@@ -44,7 +47,7 @@ export default {
             if(this.korz[index].count>0){
                 this.korz[index].count--
                 this.total -= this.korz[index].cost
-                this.$store.dispatch('AUPDCARDCOST', this.total)
+                this.AUPDCARDCOST(this.total)
 
                 if( this.korz[index].count == 0){
                     this.korz.splice(index,1)
