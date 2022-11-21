@@ -42,7 +42,7 @@ export default {
 
              
         },
-
+        //Some dev chit to test new branch
         minus(index){ 
             if(this.korz[index].count>0){
                 this.korz[index].count--
