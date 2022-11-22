@@ -10,7 +10,7 @@
               </tr>
             </thead>
             
-              <CardItem :korz="Korz" :total="TotalCardcost"   />
+              <CardItem :korz="Korz"  />
             
           </table>
           <p style="float:left; margin-left:10px">Total Cost: {{TotalCardcost}}</p>
@@ -38,9 +38,8 @@ export default {
       ]),
     },
     methods:{
-      ...mapActions([
-        'AUPDCARDCOST'
-      ]),
+
+      ...mapActions(['AUPDCARDCOST']),
       purchase(){
         this.$router.push('opl')
       }
@@ -50,17 +49,16 @@ export default {
 
        
       if(localStorage.id){
-          const resp = await serv.getUserById(localStorage.id)
-          const user = resp.data
-          const korz = user.korz.items
-          this.Korz = korz
-            
+        const resp = await serv.getUserById(localStorage.id)
+        const user = resp.data
+        const korz = user.korz.items
+        this.Korz = korz
+        for(let i = 0; i <korz.length; i++){
+          
+          this.total+= (korz[i].cost * korz[i].count)
+        }
+        this.AUPDCARDCOST(this.total)
          
-            for(let i = 0; i <korz.length; i++){
-         
-                this.total+= (korz[i].cost * korz[i].count)
-            }
-            this.AUPDCARDCOST(this.total)
             
 
       }

@@ -23,19 +23,21 @@ export default {
             type:Array,
             required:true
         },
-        total:{
-            type:Number,
-            required:true
-        }
+
     },
     
     
-
+    computed:{
+      ...mapGetters([
+        "TotalCardcost"
+      ]),
+    },
     methods:{
         ...mapActions([
             'AUPDCARDCOST'
         ]),
         plus(index){
+            this.total = this.TotalCardcost
             this.total += this.korz[index].cost
             this.korz[index].count++
             this.AUPDCARDCOST(this.total)
@@ -45,6 +47,7 @@ export default {
         minus(index){ 
             if(this.korz[index].count>0){
                 this.korz[index].count--
+                this.total = this.TotalCardcost
                 this.total -= this.korz[index].cost
                 this.AUPDCARDCOST(this.total)
 
@@ -57,11 +60,14 @@ export default {
         },
 
     },
-    // data(){
-    //     return{
-    //         total:0
-    //     }
+    // async beforeCreate(){
+        
     // },
+    data(){
+        return{
+            total:0 
+        }
+    },
     async beforeDestroy() {
        await serv.EditKorz(localStorage.id, this.korz)
     }
